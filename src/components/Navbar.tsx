@@ -41,10 +41,10 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
   return (
     <header className="fixed top-4 left-0 right-0 z-50 px-3 sm:px-6 pointer-events-none">
       <div className="max-w-7xl mx-auto flex items-center justify-center gap-2.5 sm:gap-3 pointer-events-auto">
-        
+
         {/* Main Floating Compact iOS Pill Bar */}
         <div className="flex items-center gap-2.5 sm:gap-4 bg-[#071F17]/90 backdrop-blur-xl border border-white/15 rounded-full px-3.5 sm:px-5 py-2 shadow-2xl shadow-black/40 text-white transition-all duration-300">
-          
+
           {/* Brand Logo */}
           <a href="#" className="flex items-center group shrink-0">
             <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white flex items-center justify-center border-2 border-[#D4AF37] shadow-md group-hover:scale-110 active:scale-95 transition-all overflow-hidden relative">
@@ -95,11 +95,11 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
 
         {/* Separate iOS Style Circular Action Pills (Right side) */}
         <div className="hidden sm:flex items-center gap-2 shrink-0">
-          
+
           {/* iOS Pill 1: Direct Helpline Call Action */}
           <a
             href="tel:+447795109561"
-            title="Call Dr Ameen"
+            title="Call Dr Amin"
             className="w-9 h-9 rounded-full bg-[#071F17]/90 backdrop-blur-xl border border-white/15 flex items-center justify-center text-white/90 hover:bg-white/20 hover:scale-110 active:scale-95 transition-all shadow-xl"
           >
             <PhoneCall className="w-4 h-4" />
