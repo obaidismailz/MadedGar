@@ -5,12 +5,14 @@ import Image from "next/image";
 import { Ambulance, ShoppingBag, CreditCard, ShieldAlert, ArrowUpRight, CheckCircle, Sparkles } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ServicesSectionProps {
-  onOpenConsultation: () => void;
+  onOpenConsultation: (serviceTitle?: string) => void;
 }
 
 export default function ServicesSection({ onOpenConsultation }: ServicesSectionProps) {
+  const { language } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
 
@@ -40,24 +42,24 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
     return () => ctx.revert();
   }, []);
 
-  const services = [
+  const services = language === "en" ? [
     {
       id: "emergency",
       title: "Emergency Support",
       tagline: "24/7 Swift Medical Response",
-      desc: "Immediate on-ground dispatch for medical emergencies, hospital admission coordination, doctor communication, and continuous real-time family updates.",
+      desc: "We can cooridnate with amublance and hoisptal about on going care of your beloved on-ground. We can also assist in hospital admission coordination, doctor communication, and continuous real-time family updates.",
       icon: Ambulance,
       image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1200&auto=format&fit=crop",
-      features: ["24/7 Ambulance Dispatch", "Hospital Escort & Admission", "Real-Time WhatsApp Audio/Video Logs", "Emergency Doctor Coordination"],
+      features: ["24/7 Contactable ", "Assist in Routine Hospital Visits", "Real-Time WhatsApp Audio/Video Logs"],
       badge: "Critical Care",
     },
     {
       id: "errands",
-      title: "Errand Management",
+      title: "Task Management",
       tagline: "Daily Living & Doctor Visits",
-      desc: "Personal concierges to accompany parents to doctor appointments, manage prescription refills, deliver fresh groceries, and oversee home maintenance.",
+      desc: "Personal assitant to accompany parents to doctor appointments, manage prescription refills, deliver fresh groceries, and oversee home maintenance.",
       icon: ShoppingBag,
-      image: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=1200&auto=format&fit=crop",
+      image: "/2nd image.png",
       features: ["Accompanied Doctor Visits", "Grocery & Organic Food Delivery", "Prescription & Pharmacy Refills", "Electrician & Plumber Oversight"],
       badge: "Daily Lifestyle",
     },
@@ -68,7 +70,7 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
       desc: "Hassle-free payment of utility bills, house maintenance costs, medical fees, and domestic staff salaries with full audited digital receipts.",
       icon: CreditCard,
       image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1200&auto=format&fit=crop",
-      features: ["Utility Bill Payment (Electricity/Gas)", "Audited Monthly Expense Reports", "Escrow Remittance Safety", "Domestic Staff Payroll Handling"],
+      features: ["Utility Bill Payment (Electricity/Gas)", "Audited Monthly Expense Reports", "Deliver Cash Safely", "Domestic Staff Payroll Handling"],
       badge: "Financial Security",
     },
     {
@@ -78,8 +80,49 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
       desc: "Regular unannounced and scheduled physical visits to check on parent wellness, inspect property maintenance, and verify tenant status in Pakistan.",
       icon: ShieldAlert,
       image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=1200&auto=format&fit=crop",
-      features: ["Weekly In-Person Wellness Visits", "Property Inspection Reports", "Tenant & Guard Background Checks", "Home Safety Audits"],
+      features: ["Twice a Weekly In-Person Wellness Visits", "Property Inspection Reports", "Property Insepction and Repair Assitance."],
       badge: "Property & Wellness",
+    },
+  ] : [
+    {
+      id: "emergency",
+      title: "ہنگامی طبی امداد",
+      tagline: "24/7 ہنگامی طبی جوابدہی",
+      desc: "ہم پاکستان میں آپ کے پیاروں کے لیے ایمبولینس اور ہسپتال سے رابطہ، داخلہ کی سہولت اور فیملی کو لائیو اپ ڈیٹس فراہم کرتے ہیں۔",
+      icon: Ambulance,
+      image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1200&auto=format&fit=crop",
+      features: ["24/7 رابطہ اور کال کی سہولت", "ہسپتال کے معمول کے دوروں میں مدد", "لائیو واٹس ایپ آڈیو/ویڈیو رپورٹس"],
+      badge: "طبی فلاح",
+    },
+    {
+      id: "errands",
+      title: "روزمرہ کے کام",
+      tagline: "روزمرہ کی زندگی اور ڈاکٹر کے دورے",
+      desc: "ڈاکٹر کے اپائنٹمنٹس پر ساتھ جانے، ادویات منگوانے، تازہ راشن کی ترسیل اور گھر کے کاموں کی نگرانی کے لیے پرسنل اسسٹنٹ۔",
+      icon: ShoppingBag,
+      image: "/2nd image.png",
+      features: ["ڈاکٹر کے ہاں ہمراہی", "گروسری اور راشن کی ترسیل", "ادویات کی فراہمی", "بجلی اور پلمبنگ کے کام کی نگرانی"],
+      badge: "لائف اسٹائل",
+    },
+    {
+      id: "financial",
+      title: "مالیاتی سروسز",
+      tagline: "شفاف ایسکرو اور بلوں کی ادائیگی",
+      desc: "یوٹیلیٹی بلوں، گھر کی دیکھ بھال کے اخراجات اور گھریلو عملے کی تنخواہوں کی ادائیگی مکمل آڈٹ اور ڈیجیٹل رسیدوں کے ساتھ۔",
+      icon: CreditCard,
+      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1200&auto=format&fit=crop",
+      features: ["یوٹیلیٹی بلز کی ادائیگی", "ماہانہ آڈٹ شدہ اخراجات کی رپورٹ", "محفوظ کیش کی ترسیل", "گھریلو عملے کی تنخواہوں کی ادائیگی"],
+      badge: "مالیاتی تحفظ",
+    },
+    {
+      id: "supervisory",
+      title: "نگرانی اور فلاح",
+      tagline: "پراپرٹی اور صحت کے دورے",
+      desc: "والدین کی صحت کی جانچ، پراپرٹی کی دیکھ بھال اور کرایہ داروں کی تصدیق کے لیے غیر اعلانیہ اور باقاعدہ دورے۔",
+      icon: ShieldAlert,
+      image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=1200&auto=format&fit=crop",
+      features: ["ہفتے میں دو بار انفرادی خیریت کے دورے", "پراپرٹی کی تفصیلی رپورٹ", "مرمت اور دیکھ بھال کی سہولت"],
+      badge: "نگرانی اور فلاح",
     },
   ];
 
@@ -90,20 +133,22 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
       className="py-24 bg-[#FCFAF7] relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0F3D2E]/10 text-[#0F3D2E] text-xs font-semibold uppercase tracking-wider mb-4 border border-[#0F3D2E]/15">
               <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>Core Luxury Offerings</span>
+              <span>{language === "en" ? "Core Luxury Offerings" : "ہماری بنیادی خدمات"}</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-heading font-bold text-[#161616] tracking-tight">
-              Tailored Concierge Services For Every Family Need
+              {language === "en" ? "Tailored Concierge Services For Every Family Need" : "خاندان کی ہر ضرورت کے لیے مخصوص کیئر سروسز"}
             </h2>
           </div>
           <p className="text-base text-[#777777] max-w-md font-body">
-            Designed specifically for overseas Pakistanis who demand high-touch, reliable, and premium care for their parents back home.
+            {language === "en"
+              ? "Designed specifically for overseas Pakistanis who demand reliable, Safe and premium care for their parents back home."
+              : "خاص طور پر دیارِ غیر میں مقیم پاکستانیوں کے لیے ڈیزائن کی گئی سروسز جو پاکستان میں اپنے خاندان کے لیے محفوظ اور بہترین دیکھ بھال چاہتے ہیں۔"}
           </p>
         </div>
 
@@ -125,7 +170,7 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
                     className="object-cover object-center group-hover:scale-110 transition-transform duration-700 filter brightness-95"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#071F17] via-[#071F17]/40 to-transparent" />
-                  
+
                   {/* Badge & Icon Floating Overlay */}
                   <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10">
                     <span className="px-4 py-1.5 rounded-full bg-[#071F17]/70 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/30 text-xs font-semibold uppercase tracking-wider">
@@ -165,10 +210,10 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
 
                   {/* Bottom Action Button */}
                   <button
-                    onClick={onOpenConsultation}
-                    className="w-full py-4 px-6 rounded-2xl bg-[#FCFAF7] border border-[#0F3D2E]/20 text-[#0F3D2E] font-heading font-bold text-sm hover:bg-[#0F3D2E] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+                    onClick={() => onOpenConsultation(service.title)}
+                    className="w-full py-4 px-6 rounded-2xl bg-[#FCFAF7] border border-[#0F3D2E]/20 text-[#0F3D2E] font-heading font-bold text-sm hover:bg-[#0F3D2E] hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group/btn cursor-pointer"
                   >
-                    <span>Request {service.title}</span>
+                    <span>{language === "en" ? `Request ${service.title}` : `${service.title} کی درخواست کریں`}</span>
                     <ArrowUpRight className="w-4 h-4 text-[#D4AF37] group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                   </button>
                 </div>

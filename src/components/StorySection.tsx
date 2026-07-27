@@ -5,8 +5,10 @@ import Image from "next/image";
 import { Sparkles, Heart, Compass, ShieldCheck } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function StorySection() {
+  const { language } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
 
@@ -37,7 +39,7 @@ export default function StorySection() {
     return () => ctx.revert();
   }, []);
 
-  const timelineSteps = [
+  const timelineSteps = language === "en" ? [
     {
       year: "Phase 01",
       title: "The Legacy of Mohafiz",
@@ -53,13 +55,38 @@ export default function StorySection() {
     {
       year: "Phase 03",
       title: "The Care Gap Emerged",
-      desc: "Managing aging parents' medical emergencies, doctor visits, and home maintenance from abroad proved painful and uncertain.",
+      desc: "Managing aging parents , wife , childrens and extended family ' medical emergencies, doctor visits, and home maintenance from abroad proved painful and uncertain.",
       icon: Heart,
     },
     {
       year: "Phase 04",
       title: "MadedGar Was Born",
       desc: "A institutionalized luxury concierge service blending technology, local medical teams, and unconditional warmth.",
+      icon: Sparkles,
+    },
+  ] : [
+    {
+      year: "مرحلہ 01",
+      title: "محافظ کا ورثہ",
+      desc: "پاکستان میں خاندان کے تحفظ اور عزت کی لازوال روایت میں جڑا ہوا ہے۔",
+      icon: ShieldCheck,
+    },
+    {
+      year: "مرحلہ 02",
+      title: "دیارِ غیر ہجرت",
+      desc: "لاکھوں باصلاحیت پاکستانی روشن مستقبل کی تعمیر کے لیے لندن، دبئی، ٹورنٹو اور ڈلاس منتقل ہو گئے۔",
+      icon: Compass,
+    },
+    {
+      year: "مرحلہ 03",
+      title: "دیکھ بھال میں دوری کا احساس",
+      desc: "بیرون ملک مقیم رہ کر پاکستان میں اہل خانہ کی ہنگامی طبی ضروریات، ڈاکٹر کے دورے اور دیکھ بھال کو سنبھالنا مشکل اور تکلیف دہ ثابت ہوا۔",
+      icon: Heart,
+    },
+    {
+      year: "مرحلہ 04",
+      title: "مددگار کا قیام",
+      desc: "ٹیکنالوجی، مقامی طبی ٹیموں اور خلوص کا امتزاج، ایک منظم اور پرسکون دیکھ بھال سروس۔",
       icon: Sparkles,
     },
   ];
@@ -81,24 +108,26 @@ export default function StorySection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-4 border border-[#D4AF37]/30">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Our Origin Story</span>
+            <span>{language === "en" ? "Our Origin Story" : "ہماری شروعات"}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-heading font-bold tracking-tight text-white">
-            Born From A Shared Personal Need
+            {language === "en" ? "Born From A Shared Personal Need" : "ایک ذاتی ضرورت سے جنم لینے والا عزم"}
           </h2>
           <p className="mt-4 text-base sm:text-lg text-white/70 font-body font-light">
-            How a personal commitment evolved into Pakistan's standard for luxury elderly concierge care.
+            {language === "en"
+              ? "How a personal commitment evolved into Pakistan's standard for luxury elderly concierge care."
+              : "کیسے ایک ذاتی عزم پاکستان میں اوورسیز خاندانوں کی دیکھ بھال کی بہترین پہچان بنا۔"}
           </p>
         </div>
 
         {/* Timeline Grid with SVG Path Drawing */}
         <div className="relative max-w-4xl mx-auto">
-          
+
           {/* Vertical SVG Line Drawing for Large Screens */}
           <div className="hidden sm:block absolute top-4 bottom-4 left-1/2 -translate-x-1/2 w-1 pointer-events-none z-0">
             <svg className="w-full h-full" overflow="visible">
@@ -121,9 +150,8 @@ export default function StorySection() {
               return (
                 <div
                   key={idx}
-                  className={`flex flex-col sm:flex-row items-center ${
-                    isEven ? "sm:flex-row-reverse" : ""
-                  } gap-8`}
+                  className={`flex flex-col sm:flex-row items-center ${isEven ? "sm:flex-row-reverse" : ""
+                    } gap-8`}
                 >
                   {/* Content Box */}
                   <div className="w-full sm:w-1/2 text-center sm:text-left">

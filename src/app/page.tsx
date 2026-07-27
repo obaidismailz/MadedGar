@@ -13,22 +13,36 @@ import CarePlanPricing from "@/components/CarePlanPricing";
 import StorySection from "@/components/StorySection";
 import CoreValues from "@/components/CoreValues";
 import Testimonials from "@/components/Testimonials";
-import FAQSection from "@/components/FAQSection";
 import CallToAction from "@/components/CallToAction";
 import Footer from "@/components/Footer";
 import ConsultationModal from "@/components/ConsultationModal";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
+
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export default function Home() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<string | undefined>(undefined);
+  const [customDetails, setCustomDetails] = useState<{ duration?: string; features?: string[] } | undefined>(undefined);
+
+  const handleOpenConsultation = (
+    planOrService?: string,
+    details?: { duration?: string; features?: string[] }
+  ) => {
+    setSelectedPlan(planOrService);
+    setCustomDetails(details);
+    setIsConsultationOpen(true);
+  };
 
   return (
-    <SmoothScroll>
-      <main className="min-h-screen bg-[#FCFAF7] font-body text-[#161616] selection:bg-[#0F3D2E] selection:text-[#D4AF37]">
+    <LanguageProvider>
+      <SmoothScroll>
+        <main className="min-h-screen bg-[#FCFAF7] font-body text-[#161616] selection:bg-[#0F3D2E] selection:text-[#D4AF37]">
         {/* Navigation Bar */}
-        <Navbar onOpenConsultation={() => setIsConsultationOpen(true)} />
+        <Navbar onOpenConsultation={handleOpenConsultation} />
 
         {/* Hero Section */}
-        <Hero onOpenConsultation={() => setIsConsultationOpen(true)} />
+        <Hero onOpenConsultation={handleOpenConsultation} />
 
         {/* Trust Marquee */}
         <TrustMarquee />
@@ -40,13 +54,13 @@ export default function Home() {
         <HowItWorks />
 
         {/* Services Section */}
-        <ServicesSection onOpenConsultation={() => setIsConsultationOpen(true)} />
+        <ServicesSection onOpenConsultation={handleOpenConsultation} />
 
         {/* Four Pillars */}
         <FourPillars />
 
         {/* Care Plan Pricing */}
-        <CarePlanPricing onOpenConsultation={() => setIsConsultationOpen(true)} />
+        <CarePlanPricing onOpenConsultation={handleOpenConsultation} />
 
         {/* Story Section */}
         <StorySection />
@@ -57,21 +71,28 @@ export default function Home() {
         {/* Testimonials */}
         <Testimonials />
 
-        {/* FAQ Section */}
-        <FAQSection />
-
         {/* Call To Action */}
-        <CallToAction onOpenConsultation={() => setIsConsultationOpen(true)} />
+        <CallToAction onOpenConsultation={handleOpenConsultation} />
 
         {/* Footer */}
         <Footer />
 
+        {/* Floating WhatsApp Widget */}
+        <WhatsAppWidget />
+
         {/* Consultation Modal Dialog */}
         <ConsultationModal
           isOpen={isConsultationOpen}
-          onClose={() => setIsConsultationOpen(false)}
+          initialCareNeeds={selectedPlan}
+          customPlanDetails={customDetails}
+          onClose={() => {
+            setIsConsultationOpen(false);
+            setSelectedPlan(undefined);
+            setCustomDetails(undefined);
+          }}
         />
       </main>
     </SmoothScroll>
+  </LanguageProvider>
   );
 }

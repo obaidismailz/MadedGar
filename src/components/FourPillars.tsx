@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ShieldCheck, ShoppingCart, Banknote, Home, ArrowUpRight, Sparkles } from "lucide-react";
+import { ShieldCheck, ShoppingCart, Banknote, Home, Sparkles } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function FourPillars() {
+  const { language } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -35,17 +37,17 @@ export default function FourPillars() {
     return () => ctx.revert();
   }, []);
 
-  const pillars = [
+  const pillars = language === "en" ? [
     {
       num: "01",
       title: "Emergency Support",
       icon: ShieldCheck,
-      items: ["24/7 Rapid Response", "Medical Coordination", "Real-Time Updates", "Ambulance Priority Dispatch"],
+      items: ["Medical Coordination", "Real-Time Updates", "Coordinate with Dcotor", "Coordinate with Ambulance services"],
       gradient: "from-[#0F3D2E] to-[#165642]",
     },
     {
       num: "02",
-      title: "Errand Management",
+      title: "Task Management",
       icon: ShoppingCart,
       items: ["Prescription & Grocery Shopping", "Doctor Appointments Escort", "Home Maintenance Supervision", "Lab Test Pickups"],
       gradient: "from-[#1F6B4F] to-[#0F3D2E]",
@@ -54,14 +56,43 @@ export default function FourPillars() {
       num: "03",
       title: "Financial Services",
       icon: Banknote,
-      items: ["Utility Bill Payments", "Audited Expense Tracking", "Secure Escrow Payments", "Staff Salary Disbursement"],
+      items: ["Utility Bill Payments", "Secure Escrow Payments", "Staff Salary Disbursement"],
       gradient: "from-[#0F3D2E] to-[#071F17]",
     },
     {
       num: "04",
       title: "Supervisory Support",
       icon: Home,
-      items: ["Property Safety Visits", "Tenant & Worker Verification", "Weekly Wellness Checks", "Physical Photo Verifications"],
+      items: ["Property Safety Visits", "Weekly Wellness Checks", "Physical Photo Verifications"],
+      gradient: "from-[#165642] to-[#1F6B4F]",
+    },
+  ] : [
+    {
+      num: "01",
+      title: "ہنگامی طبی امداد",
+      icon: ShieldCheck,
+      items: ["طبی ہم آہنگی", "لائیو اپ ڈیٹس", "ڈاکٹر سے رابطہ", "ایمبولینس کی فوری فراہمی"],
+      gradient: "from-[#0F3D2E] to-[#165642]",
+    },
+    {
+      num: "02",
+      title: "روزمرہ کے کام",
+      icon: ShoppingCart,
+      items: ["ادویات اور راشن کی خریداری", "ڈاکٹر کے اپائنٹمنٹ پر ہمراہی", "گھر کی دیکھ بھال کی نگرانی", "لیب ٹیسٹ رپورٹس کی وصولی"],
+      gradient: "from-[#1F6B4F] to-[#0F3D2E]",
+    },
+    {
+      num: "03",
+      title: "مالیاتی سروسز",
+      icon: Banknote,
+      items: ["بلوں کی ادائیگی", "محفوظ ایسکرو ادائیگی", "گھریلو ملازمین کی تنخواہیں"],
+      gradient: "from-[#0F3D2E] to-[#071F17]",
+    },
+    {
+      num: "04",
+      title: "نگرانی اور فلاح",
+      icon: Home,
+      items: ["پراپرٹی کی حفاظت", "ہفتہ وار خیریت کے دورے", "تصویری اور ویڈیو تصدیق"],
       gradient: "from-[#165642] to-[#1F6B4F]",
     },
   ];
@@ -73,18 +104,20 @@ export default function FourPillars() {
       className="py-24 bg-[#071F17] text-white relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-4 border border-[#D4AF37]/30">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>The Foundations of Trust</span>
+            <span>{language === "en" ? "The Foundations of Trust" : "اعتماد کی مضبوط بنیادیں"}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-heading font-bold tracking-tight text-white">
-            Four Pillars Of Care
+            {language === "en" ? "Four Pillars Of Care" : "دیکھ بھال کے چار بنیادی ستون"}
           </h2>
           <p className="mt-4 text-base sm:text-lg text-white/70 font-body font-light">
-            Comprehensive coverages meticulously designed to handle every operational aspect for your parents back home.
+            {language === "en"
+              ? "Comprehensive coverages meticulously designed to handle every operational aspect for your parents , wife , childrens and extended family back home."
+              : "پاکستان میں مقیم آپ کے والدین، زوجہ، بچوں اور خاندان کی مکمل سہولت اور فلاح کے لیے جامع کیئر سروسز۔"}
           </p>
         </div>
 
@@ -127,11 +160,7 @@ export default function FourPillars() {
                   </ul>
                 </div>
 
-                {/* Bottom line indicator */}
-                <div className="pt-6 mt-8 border-t border-white/10 flex items-center justify-between text-xs text-[#D4AF37] font-semibold">
-                  <span>Full Coverage</span>
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </div>
+
               </div>
             );
           })}

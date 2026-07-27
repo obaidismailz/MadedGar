@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ArrowUpRight, Download, ShieldCheck, Heart, Clock, Globe2, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, ShieldCheck, Heart, Clock, Globe2, Sparkles } from "lucide-react";
 import gsap from "gsap";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface HeroProps {
-  onOpenConsultation: () => void;
+  onOpenConsultation: (planOrService?: string) => void;
 }
 
 export default function Hero({ onOpenConsultation }: HeroProps) {
+  const { language } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -74,32 +77,62 @@ export default function Hero({ onOpenConsultation }: HeroProps) {
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#D4AF37]/10 rounded-full blur-[140px] pointer-events-none z-0" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center sm:text-left flex flex-col items-center sm:items-start justify-center">
-        
-        {/* Tagline Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/40 text-[#D4AF37] text-xs sm:text-sm font-semibold mb-6 shadow-inner">
-          <Sparkles className="w-4 h-4 text-[#D4AF37] animate-spin" style={{ animationDuration: '6s' }} />
-          <span>Pakistan's Premiere Elder Care & VIP Concierge</span>
+
+        {/* Glow badge */}
+        <div
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-6 border border-[#D4AF37]/30 shadow-inner"
+        >
+          <div className="w-5 h-5 rounded-full bg-white relative overflow-hidden flex-shrink-0 border border-[#D4AF37]/40 shadow-inner flex items-center justify-center">
+            <Image
+              src="/logo3.png"
+              alt="MadedGar Logo"
+              fill
+              className="object-contain p-0.5"
+            />
+          </div>
+          <span>{language === "en" ? "The Foundations of Trust" : "اعتماد کی مضبوط بنیاد"}</span>
         </div>
 
-        {/* Huge Emotional Headline */}
+        {/* Hero headline */}
         <h1
           ref={headlineRef}
-          className="text-4xl sm:text-6xl lg:text-7xl font-heading font-bold text-white tracking-tight leading-[1.1] max-w-4xl"
+          className="text-4xl sm:text-7xl font-heading font-bold tracking-tight text-white leading-[1.08]"
         >
-          Remit Love. <br />
-          <span className="bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#D4AF37] bg-clip-text text-transparent">
-            Deliver Care.
-          </span>
+          {language === "en" ? (
+            <>
+              Remit Love. <br />
+              <span className="bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#D4AF37] bg-clip-text text-transparent">
+                Deliver Care.
+              </span>
+            </>
+          ) : (
+            <>
+              محبت بھیجیں۔ <br />
+              <span className="bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#D4AF37] bg-clip-text text-transparent">
+                دیکھ بھال پہنچائیں۔
+              </span>
+            </>
+          )}
         </h1>
 
-        {/* Subtitle */}
+        {/* Subtitle description */}
         <p
           ref={subtitleRef}
-          className="mt-6 text-lg sm:text-xl text-white/80 font-body max-w-2xl leading-relaxed font-light"
+          className="mt-6 text-lg sm:text-xl text-white/70 max-w-2xl font-body font-light leading-relaxed"
         >
-          Helping overseas Pakistanis <span className="text-white font-medium">protect</span>,{" "}
-          <span className="text-white font-medium">provide</span>, and{" "}
-          <span className="text-[#D4AF37] font-medium">care</span> for their families back home with 24/7 dedicated medical, financial, and supervisory support.
+          {language === "en" ? (
+            <>
+              Helping overseas Pakistanis <span className="text-white font-medium">protect</span>,{" "}
+              <span className="text-white font-medium">provide</span>, and{" "}
+              <span className="text-[#D4AF37] font-medium">care</span> for their families back home with 24/7 dedicated medical, financial, and supervisory support.
+            </>
+          ) : (
+            <>
+              دیارِ غیر میں مقیم پاکستانیوں کے لیے پاکستان میں موجود ان کے خاندان کی <span className="text-white font-medium">حفاظت</span>،{" "}
+              <span className="text-white font-medium">سہولت</span> اور{" "}
+              <span className="text-[#D4AF37] font-medium">دیکھ بھال</span> کے لیے 24/7 وقف طبی، مالی، اور نگرانی کی خدمات۔
+            </>
+          )}
         </p>
 
         {/* CTA Buttons */}
@@ -108,20 +141,12 @@ export default function Hero({ onOpenConsultation }: HeroProps) {
           className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
         >
           <button
-            onClick={onOpenConsultation}
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#C59B27] text-[#071F17] font-semibold text-base shadow-xl shadow-[#D4AF37]/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 group"
+            onClick={() => onOpenConsultation()}
+            className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#C59B27] text-[#071F17] font-semibold text-base shadow-xl shadow-[#D4AF37]/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 group cursor-pointer"
           >
-            <span>Schedule Consultation</span>
+            <span>{language === "en" ? "Schedule Consultation" : "مشاورت کا وقت لیں"}</span>
             <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
           </button>
-
-          <a
-            href="#pricing"
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-semibold text-base border border-white/20 hover:border-white/40 transition-all flex items-center justify-center gap-2"
-          >
-            <Download className="w-5 h-5 text-[#D4AF37]" />
-            <span>Download Care Brochure</span>
-          </a>
         </div>
 
         {/* Floating Glass Stats Grid */}
@@ -130,42 +155,54 @@ export default function Hero({ onOpenConsultation }: HeroProps) {
           className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 w-full"
         >
           <div className="glass-card-dark p-5 rounded-2xl flex items-center gap-4 hover:border-[#D4AF37]/50 transition-all">
-            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37]">
+            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37] shrink-0">
               <Clock className="w-6 h-6" />
             </div>
             <div className="text-left">
               <div className="text-2xl font-heading font-bold text-white">24/7</div>
-              <div className="text-xs text-white/70 font-medium">Instant Emergency Support</div>
+              <div className="text-xs text-white/70 font-medium">
+                {language === "en" ? "Instant Emergency Support" : "فوری ہنگامی امداد"}
+              </div>
             </div>
           </div>
 
           <div className="glass-card-dark p-5 rounded-2xl flex items-center gap-4 hover:border-[#D4AF37]/50 transition-all">
-            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37]">
+            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37] shrink-0">
               <Globe2 className="w-6 h-6" />
             </div>
             <div className="text-left">
-              <div className="text-2xl font-heading font-bold text-white">Pakistan Wide</div>
-              <div className="text-xs text-white/70 font-medium">ISB, LHR, KHI & Beyond</div>
+              <div className="text-2xl font-heading font-bold text-white">
+                {language === "en" ? "Worldwide" : "دنیا بھر میں"}
+              </div>
+              <div className="text-xs text-white/70 font-medium">
+                {language === "en" ? "For Overseas Families" : "اوورسیز خاندانوں کے لیے"}
+              </div>
             </div>
           </div>
 
           <div className="glass-card-dark p-5 rounded-2xl flex items-center gap-4 hover:border-[#D4AF37]/50 transition-all">
-            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37]">
+            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37] shrink-0">
               <ShieldCheck className="w-6 h-6" />
             </div>
-            <div className="text-[#D4AF37] text-left">
-              <div className="text-2xl font-heading font-bold text-white">100% Trusted</div>
-              <div className="text-xs text-white/70 font-medium">Vetted Medical Staff</div>
+            <div className="text-left">
+              <div className="text-2xl font-heading font-bold text-white">100%</div>
+              <div className="text-xs text-white/70 font-medium">
+                {language === "en" ? "Escrow Protection" : "محفوظ ادائیگی کی ضمانت"}
+              </div>
             </div>
           </div>
 
           <div className="glass-card-dark p-5 rounded-2xl flex items-center gap-4 hover:border-[#D4AF37]/50 transition-all">
-            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37]">
+            <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center text-[#D4AF37] shrink-0">
               <Heart className="w-6 h-6" />
             </div>
             <div className="text-left">
-              <div className="text-2xl font-heading font-bold text-white">Real-time</div>
-              <div className="text-xs text-white/70 font-medium">WhatsApp Family Reports</div>
+              <div className="text-2xl font-heading font-bold text-white">
+                {language === "en" ? "Verified" : "تصدیق شدہ"}
+              </div>
+              <div className="text-xs text-white/70 font-medium">
+                {language === "en" ? "Police-Vetted Care Officers" : "بیک گراؤنڈ ویریفائیڈ عملہ"}
+              </div>
             </div>
           </div>
         </div>

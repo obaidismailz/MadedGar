@@ -1,16 +1,27 @@
 "use client";
 
 import { Stethoscope, Ambulance, UserCheck, Lock, MessageSquare, ShieldCheck, Home } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function TrustMarquee() {
-  const marqueeItems = [
+  const { language } = useLanguage();
+
+  const marqueeItems = language === "en" ? [
     { icon: Stethoscope, label: "Top Healthcare Partners" },
     { icon: Ambulance, label: "24/7 Emergency Dispatch" },
-    { icon: UserCheck, label: "100% Verified Medical Staff" },
+    { icon: UserCheck, label: "100% Verified  Staff" },
     { icon: Lock, label: "Secure Bank Escrow Payments" },
     { icon: MessageSquare, label: "Instant WhatsApp Photo/Video Updates" },
     { icon: ShieldCheck, label: "Supervised Home visits" },
-    { icon: Home, label: "Property Guarding & Maintenance" },
+    { icon: Home, label: "Property Maintenance" },
+  ] : [
+    { icon: Stethoscope, label: "بہترین طبی پارٹنرز" },
+    { icon: Ambulance, label: "24/7 ہنگامی عملہ" },
+    { icon: UserCheck, label: "100٪ تصدیق شدہ عملہ" },
+    { icon: Lock, label: "محفوظ بینک ایسکرو ادائیگیاں" },
+    { icon: MessageSquare, label: "تصاویر اور ویڈیو اپ ڈیٹس بذریعہ واٹس ایپ" },
+    { icon: ShieldCheck, label: "نگرانی کے ساتھ ہوم وزٹس" },
+    { icon: Home, label: "گھر اور پراپرٹی کی دیکھ بھال" },
   ];
 
   return (

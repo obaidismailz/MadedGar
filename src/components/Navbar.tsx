@@ -1,15 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MessageCircle, PhoneCall, Download, Calendar, Menu, X, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { PhoneCall, Calendar, Menu, X, ArrowUpRight, Globe } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface NavbarProps {
-  onOpenConsultation: () => void;
+  onOpenConsultation: (planOrService?: string) => void;
 }
 
 export default function Navbar({ onOpenConsultation }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,14 +22,20 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
+  const navLinks = language === "en" ? [
     { name: "About", href: "#about" },
     { name: "How It Works", href: "#how-it-works" },
     { name: "Services", href: "#services" },
     { name: "Pillars", href: "#pillars" },
     { name: "Pricing", href: "#pricing" },
     { name: "Story", href: "#story" },
-    { name: "FAQ", href: "#faq" },
+  ] : [
+    { name: "تعارف", href: "#about" },
+    { name: "طریقہ کار", href: "#how-it-works" },
+    { name: "خدمات", href: "#services" },
+    { name: "ستون", href: "#pillars" },
+    { name: "پیکیجز", href: "#pricing" },
+    { name: "کہانی", href: "#story" },
   ];
 
   return (
@@ -37,13 +46,16 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         <div className="flex items-center gap-2.5 sm:gap-4 bg-[#071F17]/90 backdrop-blur-xl border border-white/15 rounded-full px-3.5 sm:px-5 py-2 shadow-2xl shadow-black/40 text-white transition-all duration-300">
           
           {/* Brand Logo */}
-          <a href="#" className="flex items-center gap-2 group shrink-0">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0F3D2E] flex items-center justify-center text-[#D4AF37] font-bold text-xs sm:text-sm border border-[#D4AF37]/40 shadow-inner group-hover:scale-105 transition-transform">
-              M
+          <a href="#" className="flex items-center group shrink-0">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white flex items-center justify-center border-2 border-[#D4AF37] shadow-md group-hover:scale-110 active:scale-95 transition-all overflow-hidden relative">
+              <Image
+                src="/madedgar logo.png"
+                alt="MadedGar Logo"
+                fill
+                className="object-contain p-1.5"
+                priority
+              />
             </div>
-            <span className="font-heading font-bold text-sm sm:text-base tracking-tight text-white">
-              Maded<span className="text-[#D4AF37]">Gar</span>
-            </span>
           </a>
 
           {/* Divider Line | */}
@@ -62,13 +74,13 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             ))}
           </nav>
 
-          {/* Inner CTA Pill Button with glowing border */}
+          {/* Action button: Schedule Consultation */}
           <button
-            onClick={onOpenConsultation}
-            className="hidden sm:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#0F3D2E] hover:bg-[#165642] text-white text-[12px] font-semibold tracking-wide border border-[#D4AF37]/70 shadow-[0_0_12px_rgba(212,175,55,0.25)] hover:shadow-[0_0_18px_rgba(212,175,55,0.45)] transition-all shrink-0 hover:scale-105 active:scale-95"
+            onClick={() => onOpenConsultation()}
+            className="hidden sm:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#D4AF37] hover:bg-[#C59B27] text-[#071F17] text-[12px] font-bold transition-all whitespace-nowrap cursor-pointer"
           >
-            <span>Get Consultation</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-[#D4AF37]" />
+            <span>{language === "en" ? "Schedule Consultation" : "مشاورت کریں"}</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
 
           {/* Mobile Menu Toggle Button inside main pill */}
@@ -84,40 +96,29 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
         {/* Separate iOS Style Circular Action Pills (Right side) */}
         <div className="hidden sm:flex items-center gap-2 shrink-0">
           
-          {/* iOS Pill 1: Direct WhatsApp Quick Action */}
+          {/* iOS Pill 1: Direct Helpline Call Action */}
           <a
-            href="https://wa.me/923000000000"
-            target="_blank"
-            rel="noreferrer"
-            title="Instant WhatsApp Support"
-            className="w-9 h-9 rounded-full bg-[#071F17]/90 backdrop-blur-xl border border-white/15 flex items-center justify-center text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-400/50 hover:scale-110 active:scale-95 transition-all shadow-xl"
-          >
-            <MessageCircle className="w-4 h-4" />
-          </a>
-
-          {/* iOS Pill 2: Direct Helpline Call Action */}
-          <a
-            href="tel:+925111162333"
-            title="Call 24/7 Helpline"
+            href="tel:+447795109561"
+            title="Call Dr Ameen"
             className="w-9 h-9 rounded-full bg-[#071F17]/90 backdrop-blur-xl border border-white/15 flex items-center justify-center text-white/90 hover:bg-white/20 hover:scale-110 active:scale-95 transition-all shadow-xl"
           >
             <PhoneCall className="w-4 h-4" />
           </a>
 
-          {/* iOS Pill 3: Brochure Download Quick Icon */}
-          <a
-            href="#pricing"
-            title="Download Brochure"
-            className="w-9 h-9 rounded-full bg-[#071F17]/90 backdrop-blur-xl border border-white/15 flex items-center justify-center text-[#D4AF37] hover:bg-[#D4AF37]/20 hover:scale-110 active:scale-95 transition-all shadow-xl"
-          >
-            <Download className="w-4 h-4" />
-          </a>
-
-          {/* iOS Pill 4: Schedule Booking Modal Icon */}
+          {/* iOS Pill 2: Language Switcher */}
           <button
-            onClick={onOpenConsultation}
-            title="Schedule Consultation"
-            className="w-9 h-9 rounded-full bg-[#0F3D2E] backdrop-blur-xl border border-[#D4AF37]/80 flex items-center justify-center text-[#D4AF37] shadow-[0_0_12px_rgba(212,175,55,0.3)] hover:bg-[#D4AF37] hover:text-[#071F17] hover:scale-110 active:scale-95 transition-all"
+            onClick={() => setLanguage(language === "en" ? "ur" : "en")}
+            title={language === "en" ? "Switch to Urdu (اردو)" : "Switch to English"}
+            className="w-9 h-9 rounded-full bg-[#071F17]/90 backdrop-blur-xl border border-white/15 flex items-center justify-center text-[#D4AF37] hover:bg-[#D4AF37]/20 hover:scale-110 active:scale-95 transition-all shadow-xl cursor-pointer"
+          >
+            <Globe className="w-4 h-4" />
+          </button>
+
+          {/* iOS Pill 3: Schedule Booking Modal Icon */}
+          <button
+            onClick={() => onOpenConsultation()}
+            title={language === "en" ? "Schedule Consultation" : "مشاورت کریں"}
+            className="w-9 h-9 rounded-full bg-[#0F3D2E] backdrop-blur-xl border border-[#D4AF37]/80 flex items-center justify-center text-[#D4AF37] shadow-[0_0_12px_rgba(212,175,55,0.3)] hover:bg-[#D4AF37] hover:text-[#071F17] hover:scale-110 active:scale-95 transition-all cursor-pointer"
           >
             <Calendar className="w-4 h-4" />
           </button>
@@ -142,15 +143,27 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
             ))}
           </div>
 
-          <div className="pt-2 flex items-center justify-between gap-2">
+          <div className="pt-2 flex flex-col gap-2">
+            {/* Mobile Language Switcher */}
+            <button
+              onClick={() => {
+                setLanguage(language === "en" ? "ur" : "en");
+                setMobileMenuOpen(false);
+              }}
+              className="w-full py-2.5 rounded-full border border-white/20 text-white text-xs font-bold text-center flex items-center justify-center gap-1.5 hover:bg-white/10 transition-all cursor-pointer"
+            >
+              <Globe className="w-4 h-4 text-[#D4AF37]" />
+              <span>{language === "en" ? "Urdu (اردو)" : "English (انگریزی)"}</span>
+            </button>
+
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenConsultation();
               }}
-              className="w-full py-2.5 rounded-full bg-[#D4AF37] text-[#071F17] text-xs font-bold text-center shadow-lg"
+              className="w-full py-2.5 rounded-full bg-[#D4AF37] text-[#071F17] text-xs font-bold text-center shadow-lg hover:bg-[#C59B27] transition-all cursor-pointer"
             >
-              Schedule Consultation
+              {language === "en" ? "Schedule Consultation" : "مشاورت کا وقت لیں"}
             </button>
           </div>
         </div>
