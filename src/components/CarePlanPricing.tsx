@@ -14,54 +14,58 @@ interface CarePlanPricingProps {
 export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingProps) {
   const { language } = useLanguage();
   const [annual, setAnnual] = useState(true);
-  const [selectedTime, setSelectedTime] = useState<"single" | "6h" | "12h">("single");
+  const [selectedTime, setSelectedTime] = useState<"6h" | "12h">("6h");
 
-  const allFeatures = language === "en" ? [
-    { id: "helpline", text: "24/7 Emergency Helpline", price: 15 },
-    { id: "concierge", text: "Bi-weekly In-Person Concierge Visit", price: 25 },
-    { id: "delivery", text: "Prescription & Grocery Delivery", price: 15 },
-    { id: "bills", text: "Utility Bill Payment Handling", price: 15 },
-    { id: "whatsapp_monthly", text: "Monthly WhatsApp Summary Report", price: 10 },
-    { id: "doctor", text: "Accompanied Doctor & Hospital Visits", price: 40 },
-    { id: "vitals", text: "Twice a Week In-Person Wellness & Health Vitals Check", price: 50 },
-    { id: "property", text: "Property Maintenance & Worker Supervision", price: 30 },
-    { id: "logs", text: "Instant Audio/Video WhatsApp Family Logs", price: 20 },
-  ] : [
-    { id: "helpline", text: "24/7 ہنگامی ہیلپ لائن", price: 15 },
-    { id: "concierge", text: "ہر دو ہفتے بعد انفرادی ملاقات", price: 25 },
-    { id: "delivery", text: "ادویات اور راشن کی ترسیل", price: 15 },
-    { id: "bills", text: "بلوں کی ادائیگی اور انتظام", price: 15 },
-    { id: "whatsapp_monthly", text: "ماہانہ رپورٹ خلاصہ واٹس ایپ پر", price: 10 },
-    { id: "doctor", text: "ڈاکٹر اور ہسپتال کے دورے پر ہمراہی", price: 40 },
-    { id: "vitals", text: "ہفتے میں دو بار انفرادی صحت کی جانچ", price: 50 },
-    { id: "property", text: "گھر کی دیکھ بھال اور ملازمین کی نگرانی", price: 30 },
-    { id: "logs", text: "لائیو واٹس ایپ آڈیو/ویڈیو اپ ڈیٹس", price: 20 },
-  ];
+  const getServices = () => {
+    const is6h = selectedTime === "6h";
+    if (language === "en") {
+      return [
+        {
+          id: "with_car",
+          text: "With Car (20km)",
+          price: is6h ? 7000 : 14000,
+        },
+        {
+          id: "with_bike",
+          text: "With Bike (20km)",
+          price: is6h ? 4000 : 7000,
+        },
+      ];
+    } else {
+      return [
+        {
+          id: "with_car",
+          text: "گاڑی کے ساتھ (20 کلومیٹر)",
+          price: is6h ? 7000 : 14000,
+        },
+        {
+          id: "with_bike",
+          text: "بائیک کے ساتھ (20 کلومیٹر)",
+          price: is6h ? 4000 : 7000,
+        },
+      ];
+    }
+  };
 
   const [checkedFeatureIds, setCheckedFeatureIds] = useState<string[]>(
-    allFeatures.map(f => f.id)
+    ["with_car", "with_bike"]
   );
 
   const getCustomPrice = () => {
-    let base = 49;
-    if (selectedTime === "6h") base = 99;
-    if (selectedTime === "12h") base = 179;
-
-    const featuresPrice = allFeatures
+    const currentServices = getServices();
+    const total = currentServices
       .filter((f) => checkedFeatureIds.includes(f.id))
       .reduce((sum, f) => sum + f.price, 0);
 
-    const monthlyTotal = base + featuresPrice;
-    const finalPrice = annual ? monthlyTotal * 0.8 : monthlyTotal;
-    return `$${Math.round(finalPrice)}`;
+    return `PKR ${Math.round(total).toLocaleString()}`;
   };
 
   const plans = language === "en" ? [
     {
       name: "Companion Care",
       tagline: "Essential Support & Errands",
-      monthlyPrice: "$149",
-      annualPrice: "$119",
+      monthlyPrice: "PKR 41,000",
+      annualPrice: "PKR 32,800",
       period: "/month",
       desc: "Ideal for independent parents , wife , childrens and extended family  who need routine errand support, bill management, and wellness checks.",
       features: [
@@ -76,10 +80,10 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
       icon: ShieldCheck,
     },
     {
-      name: "Mohafiz Care",
+      name: "Madedgar Care",
       tagline: "Complete Medical & VIP Concierge",
-      monthlyPrice: "$299",
-      annualPrice: "$239",
+      monthlyPrice: "PKR 83,000",
+      annualPrice: "PKR 66,400",
       period: "/month",
       desc: "Our most popular comprehensive package. Full medical coordination, accompanied doctor visits, and property checks.",
       features: [
@@ -98,8 +102,8 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
     {
       name: "کمپینین کیئر",
       tagline: "بنیادی دیکھ بھال اور راشن کی ترسیل",
-      monthlyPrice: "$149",
-      annualPrice: "$119",
+      monthlyPrice: "PKR 41,000",
+      annualPrice: "PKR 32,800",
       period: "/ماہ",
       desc: "ان والدین، زوجہ اور اہل خانہ کے لیے جو آزادانہ رہنا پسند کرتے ہیں لیکن انہیں روزمرہ کے کاموں میں مدد اور باقاعدہ خیریت معلوم کرنے کی ضرورت ہوتی ہے۔",
       features: [
@@ -116,8 +120,8 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
     {
       name: "محافظ کیئر",
       tagline: "کامل طبی معاونت اور وی آئی پی کیئر",
-      monthlyPrice: "$299",
-      annualPrice: "$239",
+      monthlyPrice: "PKR 83,000",
+      annualPrice: "PKR 66,400",
       period: "/ماہ",
       desc: "ہمارا مقبول ترین پیکیج۔ مکمل طبی کوآرڈینیشن، ڈاکٹر کے اپائنٹمنٹس پر ہمراہی اور باقاعدہ پراپرٹی چیک۔",
       features: [
@@ -283,9 +287,6 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
                 <span className="font-number font-bold text-4xl sm:text-5xl tracking-tight">
                   {getCustomPrice()}
                 </span>
-                <span className="text-sm font-body text-[#777777]">
-                  {language === "en" ? "/month" : "/ماہ"}
-                </span>
               </div>
 
               <p className="text-xs sm:text-sm leading-relaxed mb-6 font-body text-[#161616]/75">
@@ -299,9 +300,8 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
                 <div className="text-xs uppercase font-bold tracking-wider text-[#0F3D2E]">
                   {language === "en" ? "Visit Duration:" : "ملاقات کا دورانیہ:"}
                 </div>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   {[
-                    { id: "single", label: language === "en" ? "Single Visit" : "ایک دورہ" },
                     { id: "6h", label: language === "en" ? "6 Hours" : "6 گھنٹے" },
                     { id: "12h", label: language === "en" ? "12 Hours" : "12 گھنٹے" },
                   ].map((opt) => (
@@ -310,8 +310,8 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
                       type="button"
                       onClick={() => setSelectedTime(opt.id as any)}
                       className={`py-2 px-1 rounded-xl text-xs font-semibold border transition-all text-center cursor-pointer ${selectedTime === opt.id
-                          ? "bg-[#0F3D2E] text-white border-[#0F3D2E]"
-                          : "bg-[#0F3D2E]/5 text-[#0F3D2E] border-transparent hover:bg-[#0F3D2E]/10"
+                        ? "bg-[#0F3D2E] text-white border-[#0F3D2E]"
+                        : "bg-[#0F3D2E]/5 text-[#0F3D2E] border-transparent hover:bg-[#0F3D2E]/10"
                         }`}
                     >
                       {opt.label}
@@ -323,43 +323,58 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
               {/* Checklist */}
               <div className="space-y-3.5 mb-8">
                 <div className="text-xs uppercase font-bold tracking-wider text-[#0F3D2E]">
-                  {language === "en" ? "Select Privileges:" : "سہولیات منتخب کریں:"}
+                  {language === "en" ? "Select Transport Options:" : "ٹرانسپورٹ سہولیات منتخب کریں:"}
                 </div>
-                <div className="max-h-[220px] overflow-y-auto pr-2 space-y-3">
-                  {allFeatures.map((feat) => {
+                <div className="space-y-3">
+                  {getServices().map((feat) => {
                     const isChecked = checkedFeatureIds.includes(feat.id);
                     return (
                       <label
                         key={feat.id}
-                        className="flex items-start gap-3 text-xs sm:text-sm font-body cursor-pointer group/item select-none"
+                        className="flex items-center justify-between text-xs sm:text-sm font-body cursor-pointer group/item select-none p-3 rounded-xl border border-gray-100 bg-gray-50/50 hover:bg-white hover:border-[#0F3D2E]/20 transition-all"
                       >
-                        <input
-                          type="checkbox"
-                          checked={isChecked}
-                          onChange={() => {
-                            if (isChecked) {
-                              setCheckedFeatureIds(checkedFeatureIds.filter((id) => id !== feat.id));
-                            } else {
-                              setCheckedFeatureIds([...checkedFeatureIds, feat.id]);
-                            }
-                          }}
-                          className="sr-only"
-                        />
-                        <div
-                          className={`w-4 h-4 rounded mt-0.5 flex items-center justify-center border transition-all shrink-0 ${isChecked
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onChange={() => {
+                              if (isChecked) {
+                                setCheckedFeatureIds(checkedFeatureIds.filter((id) => id !== feat.id));
+                              } else {
+                                setCheckedFeatureIds([...checkedFeatureIds, feat.id]);
+                              }
+                            }}
+                            className="sr-only"
+                          />
+                          <div
+                            className={`w-4 h-4 rounded flex items-center justify-center border transition-all shrink-0 ${isChecked
                               ? "bg-[#0F3D2E] border-[#0F3D2E] text-white"
                               : "bg-white border-gray-300 text-transparent group-hover/item:border-[#0F3D2E]"
-                            }`}
-                        >
-                          <Check className="w-3 h-3 stroke-[3]" />
+                              }`}
+                          >
+                            <Check className="w-3 h-3 stroke-[3]" />
+                          </div>
+                          <span className={`font-medium transition-colors leading-tight ${isChecked ? "text-[#161616]" : "text-[#777777]"}`}>
+                            {feat.text}
+                          </span>
                         </div>
-                        <span className={`transition-colors leading-tight ${isChecked ? "text-[#161616]" : "text-[#777777]"}`}>
-                          {feat.text}
+                        <span className="text-xs font-bold text-[#0F3D2E]">
+                          PKR {feat.price.toLocaleString()}
                         </span>
                       </label>
                     );
                   })}
                 </div>
+              </div>
+
+              {/* Night Shift Note */}
+              <div className="mb-6 p-3 rounded-xl bg-[#0F3D2E]/5 border border-[#0F3D2E]/10 flex items-start gap-2.5 text-xs text-[#0F3D2E] font-medium leading-snug">
+                <Sparkles className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
+                <span>
+                  {language === "en"
+                    ? "Note: From 8:00 PM to 8:00 AM price will be 1.5x."
+                    : "نوٹ: رات 8:00 بجے سے صبح 8:00 بجے تک قیمت 1.5 گنا ہوگی۔"}
+                </span>
               </div>
             </div>
 
@@ -367,14 +382,14 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
             <button
               onClick={() => {
                 const getDurationLabel = () => {
-                  if (selectedTime === "single") return language === "en" ? "Single Visit" : "ایک دورہ";
                   if (selectedTime === "6h") return language === "en" ? "6 Hours" : "6 گھنٹے";
                   return language === "en" ? "12 Hours" : "12 گھنٹے";
                 };
 
-                const selectedFeatureTexts = allFeatures
+                const currentServices = getServices();
+                const selectedFeatureTexts = currentServices
                   .filter((f) => checkedFeatureIds.includes(f.id))
-                  .map((f) => f.text);
+                  .map((f) => `${f.text} (PKR ${f.price.toLocaleString()})`);
 
                 onOpenConsultation("Custom Care", {
                   duration: getDurationLabel(),
