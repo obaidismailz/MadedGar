@@ -153,8 +153,8 @@ export default function ExplainerVideo({ onOpenConsultation }: ExplainerVideoPro
                     {/* Background cover image with hover scale */}
                     <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
                       <img
-                        src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=1200&auto=format&fit=crop"
-                        alt="Elderly Pakistani family care background"
+                        src="https://img.youtube.com/vi/BxuKtJ1Cf4I/hqdefault.jpg"
+                        alt="Madedgar Care Explainer Video Thumbnail"
                         className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 filter brightness-95 opacity-80"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#071F17] via-transparent to-black/40" />
