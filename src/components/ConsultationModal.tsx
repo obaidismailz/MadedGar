@@ -52,7 +52,7 @@ export default function ConsultationModal({ isOpen, onClose, initialCareNeeds, c
       colors: ["#0F3D2E", "#D4AF37", "#1F6B4F"],
     });
 
-    let message = `Hello Dr Amin, I would like to book a free consultation for MadedGar care services.\n\n`;
+    let message = `Hello Amin, I would like to book a free consultation for MadedGar care services.\n\n`;
     message += `*Client Contact Details:*\n`;
     message += `• Full Name: ${formData.name}\n`;
     message += `• WhatsApp / Phone: ${formData.phone}\n`;
@@ -126,11 +126,11 @@ export default function ConsultationModal({ isOpen, onClose, initialCareNeeds, c
               <p className="text-[#161616]/75 max-w-md mx-auto text-sm leading-relaxed font-body">
                 {language === "en" ? (
                   <>
-                    Thank you, <span className="font-semibold text-[#0F3D2E]">{formData.name}</span>. We are opening WhatsApp to connect you directly with <span className="font-bold text-[#D4AF37]">Dr Amin</span>.
+                    Thank you, <span className="font-semibold text-[#0F3D2E]">{formData.name}</span>. We are opening WhatsApp to connect you directly with <span className="font-bold text-[#D4AF37]">Amin</span>.
                   </>
                 ) : (
                   <>
-                    شکریہ، <span className="font-semibold text-[#0F3D2E]">{formData.name}</span>۔ آپ کو براہ راست <span className="font-bold text-[#D4AF37]">ڈاکٹر امین</span> سے جوڑنے کے لیے واٹس ایپ کھولا جا رہا ہے۔
+                    شکریہ، <span className="font-semibold text-[#0F3D2E]">{formData.name}</span>۔ آپ کو براہ راست <span className="font-bold text-[#D4AF37]">امین</span> سے جوڑنے کے لیے واٹس ایپ کھولا جا رہا ہے۔
                   </>
                 )}
               </p>

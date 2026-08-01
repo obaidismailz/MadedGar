@@ -11,6 +11,7 @@ import ServicesSection from "@/components/ServicesSection";
 import FourPillars from "@/components/FourPillars";
 import CarePlanPricing from "@/components/CarePlanPricing";
 import StorySection from "@/components/StorySection";
+import ExplainerVideo from "@/components/ExplainerVideo";
 import CoreValues from "@/components/CoreValues";
 import Testimonials from "@/components/Testimonials";
 import CallToAction from "@/components/CallToAction";
@@ -49,6 +50,9 @@ export default function Home() {
 
         {/* About Section */}
         <AboutSection />
+
+        {/* Explainer Video Section */}
+        <ExplainerVideo onOpenConsultation={handleOpenConsultation} />
 
         {/* How It Works Section */}
         <HowItWorks />

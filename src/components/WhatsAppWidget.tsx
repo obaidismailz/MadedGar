@@ -15,7 +15,7 @@ export default function WhatsAppWidget() {
 
   return (
     <a
-      href="https://wa.me/447795109561?text=Hello%20Dr%20Amin,%20I%20would%20like%20to%20learn%20more%20about%20MadedGar%20care%20services."
+      href="https://wa.me/447795109561?text=Hello%20Amin,%20I%20would%20like%20to%20learn%20more%20about%20MadedGar%20care%20services."
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20ba5a] text-white px-5 py-3.5 rounded-full shadow-2xl hover:shadow-[#25D366]/30 hover:-translate-y-1 active:scale-95 transition-all duration-300 group border border-white/10 select-none cursor-pointer"
@@ -40,7 +40,7 @@ export default function WhatsAppWidget() {
 
       {/* Name Label */}
       <span className="font-heading font-semibold text-xs uppercase tracking-wider whitespace-nowrap">
-        Dr Amin
+        Amin
       </span>
     </a>
   );

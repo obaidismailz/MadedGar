@@ -99,7 +99,7 @@ export default function Navbar({ onOpenConsultation }: NavbarProps) {
           {/* iOS Pill 1: Direct Helpline Call Action */}
           <a
             href="tel:+447795109561"
-            title="Call Dr Amin"
+            title="Call Amin"
             className="w-9 h-9 rounded-full bg-[#071F17]/90 backdrop-blur-xl border border-white/15 flex items-center justify-center text-white/90 hover:bg-white/20 hover:scale-110 active:scale-95 transition-all shadow-xl"
           >
             <PhoneCall className="w-4 h-4" />

@@ -75,6 +75,7 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
         "Utility Bill Payment Handling",
         "Monthly WhatsApp Summary Report",
       ],
+      note: "This package doesn’t include facility of Car & transport.",
       cta: "Select Companion Plan",
       highlighted: false,
       icon: ShieldCheck,
@@ -93,6 +94,7 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
         "Property Maintenance & Worker Supervision",
         "Instant Audio/Video WhatsApp Family Logs",
       ],
+      note: "This package include facility of car & driver once a week only .",
       cta: "Select Mohafiz Plan",
       highlighted: true,
       popularBadge: "Most Popular Overseas Choice",
@@ -113,6 +115,7 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
         "یوٹیلیٹی بلز کی ادائیگی کا انتظام",
         "ماہانہ واٹس ایپ خلاصہ رپورٹ",
       ],
+      note: "اس پیکیج میں گاڑی اور ٹرانسپورٹ کی سہولت شامل نہیں ہے۔",
       cta: "کمپینین پلان منتخب کریں",
       highlighted: false,
       icon: ShieldCheck,
@@ -131,6 +134,7 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
         "گھر کی دیکھ بھال اور عملے کی نگرانی",
         "تصویری اور ویڈیو خلاصہ رپورٹ بذریعہ واٹس ایپ",
       ],
+      note: "اس پیکیج میں ہفتے میں صرف ایک بار گاڑی اور ڈرائیور کی سہولت شامل ہے۔",
       cta: "محافظ پلان منتخب کریں",
       highlighted: true,
       popularBadge: "اوورسیز پاکستانیوں کا سب سے مقبول انتخاب",
@@ -236,7 +240,7 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
                   {/* Features List */}
                   <div className="space-y-3.5 mb-8">
                     <div className={`text-xs uppercase font-bold tracking-wider ${plan.highlighted ? "text-[#D4AF37]" : "text-[#0F3D2E]"}`}>
-                      Included Privileges:
+                      {language === "en" ? "Included Privileges:" : "شامل سہولیات:"}
                     </div>
                     {plan.features.map((feat, i) => (
                       <div key={i} className="flex items-start gap-3 text-xs sm:text-sm font-body">
@@ -246,6 +250,19 @@ export default function CarePlanPricing({ onOpenConsultation }: CarePlanPricingP
                         </span>
                       </div>
                     ))}
+
+                    {plan.note && (
+                      <div className={`mt-4 p-3.5 rounded-2xl border text-[11px] leading-relaxed font-body ${
+                        plan.highlighted 
+                          ? "bg-[#0F3D2E] border-[#D4AF37]/30 text-white/90" 
+                          : "bg-[#FCFAF7] border-[#0F3D2E]/10 text-[#777777]"
+                      }`}>
+                        <span className="font-semibold text-[#D4AF37]">
+                          {language === "en" ? "Note: " : "نوٹ: "}
+                        </span>
+                        {plan.note}
+                      </div>
+                    )}
                   </div>
                 </div>
 
