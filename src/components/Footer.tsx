@@ -90,13 +90,20 @@ export default function Footer() {
                     : "مرکز: بلیو ایریا، اسلام آباد | لندن ڈیسک"}
                 </span>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                <span>
-                  {language === "en"
-                    ? "24/7 Helpline: +44 7795 109561"
-                    : "24/7 ہیلپ لائن: 109561 7795 44+"}
-                </span>
+              <div className="flex items-start gap-3">
+                <Phone className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
+                <div className="flex flex-col gap-1">
+                  <span>
+                    {language === "en"
+                      ? "Pakistan Office: +92 327 3308560"
+                      : "پاکستان آفس: 3308560 327 92+"}
+                  </span>
+                  <span>
+                    {language === "en"
+                      ? "International office / UK: +44 7795 109561"
+                      : "انٹرنیشنل آفس / یوکے: 109561 7795 44+"}
+                  </span>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-[#D4AF37] shrink-0" />
