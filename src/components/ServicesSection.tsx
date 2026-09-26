@@ -1,11 +1,29 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Ambulance, ShoppingBag, CreditCard, ShieldAlert, ArrowUpRight, CheckCircle, Sparkles } from "lucide-react";
+import {
+  Ambulance,
+  ShoppingBag,
+  CreditCard,
+  ShieldAlert,
+  ArrowUpRight,
+  CheckCircle,
+  Sparkles,
+  Award,
+  Activity,
+  Dumbbell,
+  Heart,
+  Calendar,
+  MapPin,
+  ChevronRight,
+  CheckCircle2,
+  Stethoscope
+} from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/context/LanguageContext";
+import DrHadiqaModal from "@/components/DrHadiqaModal";
 
 interface ServicesSectionProps {
   onOpenConsultation: (serviceTitle?: string) => void;
@@ -15,6 +33,14 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
   const { language } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const drCardRef = useRef<HTMLDivElement>(null);
+  const [isDrModalOpen, setIsDrModalOpen] = useState(false);
+  const [drModalTab, setDrModalTab] = useState<"overview" | "physio" | "fitness" | "pricing">("overview");
+
+  const openDrModal = (tab: "overview" | "physio" | "fitness" | "pricing" = "overview") => {
+    setDrModalTab(tab);
+    setIsDrModalOpen(true);
+  };
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -37,6 +63,23 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
           }
         );
       }
+
+      if (drCardRef.current) {
+        gsap.fromTo(
+          drCardRef.current,
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: drCardRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -47,17 +90,17 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
       id: "emergency",
       title: "Emergency Support",
       tagline: "24/7 Swift Medical Response",
-      desc: "We can cooridnate with amublance and hoisptal about on going care of your beloved on-ground. We can also assist in hospital admission coordination, doctor communication, and continuous real-time family updates.",
+      desc: "We can coordinate with ambulance and hospital about ongoing care of your beloved on-ground. We can also assist in hospital admission coordination, doctor communication, and continuous real-time family updates.",
       icon: Ambulance,
       image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1200&auto=format&fit=crop",
-      features: ["24/7 Contactable ", "Assist in Routine Hospital Visits", "Real-Time WhatsApp Audio/Video Logs"],
+      features: ["24/7 Contactable", "Assist in Routine Hospital Visits", "Real-Time WhatsApp Audio/Video Logs"],
       badge: "Critical Care",
     },
     {
       id: "errands",
       title: "Task Management",
       tagline: "Daily Living & Doctor Visits",
-      desc: "Personal assitant to accompany parents to doctor appointments, manage prescription refills, deliver fresh groceries, and oversee home maintenance.",
+      desc: "Personal assistant to accompany parents to doctor appointments, manage prescription refills, deliver fresh groceries, and oversee home maintenance.",
       icon: ShoppingBag,
       image: "/2nd image.png",
       features: ["Accompanied Doctor Visits", "Grocery & Organic Food Delivery", "Prescription & Pharmacy Refills", "Electrician & Plumber Oversight"],
@@ -80,7 +123,7 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
       desc: "Regular unannounced and scheduled physical visits to check on parent wellness, inspect property maintenance, and verify tenant status in Pakistan.",
       icon: ShieldAlert,
       image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=1200&auto=format&fit=crop",
-      features: ["Twice a Weekly In-Person Wellness Visits", "Property Inspection Reports", "Property Insepction and Repair Assitance."],
+      features: ["Twice a Weekly In-Person Wellness Visits", "Property Inspection Reports", "Property Inspection and Repair Assistance"],
       badge: "Property & Wellness",
     },
   ] : [
@@ -147,13 +190,13 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
           </div>
           <p className="text-base text-[#777777] max-w-md font-body">
             {language === "en"
-              ? "Designed specifically for overseas Pakistanis who demand reliable, Safe and premium care for their parents back home."
+              ? "Designed specifically for overseas Pakistanis who demand reliable, safe and premium care for their parents back home."
               : "خاص طور پر دیارِ غیر میں مقیم پاکستانیوں کے لیے ڈیزائن کی گئی سروسز جو پاکستان میں اپنے خاندان کے لیے محفوظ اور بہترین دیکھ بھال چاہتے ہیں۔"}
           </p>
         </div>
 
         {/* 40px Rounded Luxury Cards Grid */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {services.map((service) => {
             const Icon = service.icon;
             return (
@@ -222,7 +265,167 @@ export default function ServicesSection({ onOpenConsultation }: ServicesSectionP
           })}
         </div>
 
+        {/* FULL CARD COMPLETE ROW: DR. HADIQA SHAHROOM SPECIALIST PROFILE */}
+        <div
+          ref={drCardRef}
+          onClick={() => setIsDrModalOpen(true)}
+          className="group relative bg-gradient-to-br from-[#071F17] via-[#0F3D2E] to-[#164837] rounded-[40px] border-2 border-[#D4AF37]/40 overflow-hidden shadow-2xl hover:shadow-[0_25px_60px_rgba(15,61,46,0.35)] transition-all duration-500 hover:-translate-y-1 cursor-pointer"
+        >
+          {/* Background Glows & Accent Watermark */}
+          <div className="absolute -right-20 -top-20 w-80 h-80 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute left-1/4 -bottom-20 w-72 h-72 bg-[#0F3D2E]/40 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              {/* Doctor Image Column */}
+              <div className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left">
+                <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-3xl overflow-hidden border-4 border-[#D4AF37] shadow-2xl group-hover:scale-105 transition-transform duration-500 bg-[#071F17]">
+                  <Image
+                    src="/DR.png"
+                    alt="Dr. Hadiqa Shahroom - DPT Physiotherapist"
+                    fill
+                    className="object-cover object-top filter brightness-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  {/* Floating Certified Badge */}
+                  <div className="absolute bottom-3 left-3 right-3 py-1.5 px-3 rounded-xl bg-[#071F17]/90 backdrop-blur-md border border-[#D4AF37]/40 text-center">
+                    <span className="text-[11px] font-heading font-bold text-[#D4AF37] uppercase tracking-wider">
+                      DPT • Certified Specialist
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Doctor Info & Highlights Column */}
+              <div className="lg:col-span-8 flex flex-col justify-between text-white space-y-6">
+                <div>
+                  {/* Badges Row */}
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#D4AF37] text-[#071F17] text-xs font-heading font-bold uppercase tracking-wider shadow-md">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      {language === "en" ? "Homecare Specialist" : "خصوصی ہوم کیئر سروس"}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[#D4AF37] text-xs font-semibold">
+                      <Award className="w-3.5 h-3.5" />
+                      Shifa & PAF Hospital Trained
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-xs">
+                      <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      Islamabad, DHA & Bahria Town
+                    </span>
+                  </div>
+
+                  {/* Title & Subtitle */}
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white tracking-tight">
+                    {language === "en" ? "Dr. Hadiqa Shahroom" : "ڈاکٹر حدیقہ شاہ روم"}
+                  </h3>
+                  <p className="text-sm sm:text-base text-[#D4AF37] font-heading font-semibold mt-1">
+                    DPT | {language === "en" ? "Physiotherapist & Women's Fitness Trainer" : "ماہر فزیوتھراپسٹ اور ویمنز فٹنس ٹرینر"}
+                  </p>
+                  
+                  <p className="text-sm sm:text-base text-white/85 mt-3 font-body leading-relaxed max-w-2xl">
+                    {language === "en"
+                      ? "Professional physiotherapy and personal fitness training delivered right at your doorstep. Hospital-standard recovery for elderly and post-surgery patients, plus private in-home fitness for women."
+                      : "پیشہ ورانہ فزیوتھراپی اور ذاتی فٹنس ٹریننگ، اب آپ کی دہلیز پر۔ بزرگ اور سرجری سے صحت یاب ہونے والے مریضوں کے لیے ہسپتال کے معیار کی دیکھ بھال اور خواتین کے لیے پرائیویٹ گھریلو فٹنس سیشنز۔"}
+                  </p>
+                </div>
+
+                {/* 3 Pillar Feature Pills */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm group-hover:border-[#D4AF37]/40 transition-colors">
+                    <div className="flex items-center gap-2 font-heading font-bold text-sm text-[#D4AF37] mb-1">
+                      <Activity className="w-4 h-4" />
+                      <span>{language === "en" ? "Home Physio" : "گھریلو فزیوتھراپی"}</span>
+                    </div>
+                    <p className="text-xs text-white/75">
+                      {language === "en" ? "Hospital-standard care at home with medical equipment" : "گھر پر ہسپتال کے معیار کا مکمل علاج"}
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm group-hover:border-[#D4AF37]/40 transition-colors">
+                    <div className="flex items-center gap-2 font-heading font-bold text-sm text-[#D4AF37] mb-1">
+                      <Dumbbell className="w-4 h-4" />
+                      <span>{language === "en" ? "Women's Fitness" : "خواتین فٹنس"}</span>
+                    </div>
+                    <p className="text-xs text-white/75">
+                      {language === "en" ? "Private 1-on-1 and small group training at home" : "خواتین کے لیے محفوظ ذاتی سیشنز"}
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm group-hover:border-[#D4AF37]/40 transition-colors">
+                    <div className="flex items-center gap-2 font-heading font-bold text-sm text-[#D4AF37] mb-1">
+                      <Stethoscope className="w-4 h-4" />
+                      <span>{language === "en" ? "Hospital Trained" : "ہسپتال تجربہ"}</span>
+                    </div>
+                    <p className="text-xs text-white/75">
+                      {language === "en" ? "Ex-Shifa International & PAF Hospital Islamabad" : "شفا انٹرنیشنل اور پی اے ایف ہسپتال"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Action CTAs */}
+                <div className="pt-2 flex flex-wrap items-center gap-3.5">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openDrModal("overview");
+                    }}
+                    className="py-3.5 px-6 rounded-2xl bg-[#D4AF37] hover:bg-[#c49f2e] text-[#071F17] font-heading font-bold text-sm transition-all duration-300 shadow-xl shadow-[#D4AF37]/20 flex items-center justify-center gap-2 cursor-pointer group/action"
+                  >
+                    <span>{language === "en" ? "View Full Profile" : "مکمل پروفائل دیکھیں"}</span>
+                    <ArrowUpRight className="w-4 h-4 group-hover/action:translate-x-1 group-hover/action:-translate-y-1 transition-transform" />
+                  </button>
+
+                  {/* Glossy Rounded Charges & Packages Button with Animated Line Sheen */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openDrModal("pricing");
+                    }}
+                    className="relative group/pkg py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#0F3D2E] via-[#165642] to-[#0F3D2E] text-[#D4AF37] border-2 border-[#D4AF37] font-heading font-bold text-sm shadow-[0_0_25px_rgba(212,175,55,0.4)] hover:shadow-[0_0_35px_rgba(212,175,55,0.7)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer overflow-hidden"
+                  >
+                    {/* Glossy sweeping light beam */}
+                    <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none animate-shimmer-sweep" />
+                    
+                    <span className="relative z-10">{language === "en" ? "Charges & Packages" : "پیکیجز اور فیس"}</span>
+                    <span className="relative z-10 px-2 py-0.5 rounded-full bg-[#D4AF37] text-[#071F17] text-[11px] font-extrabold uppercase">
+                      15% Off
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenConsultation("Dr. Hadiqa Shahroom - Homecare & Physiotherapy");
+                    }}
+                    className="py-3.5 px-6 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-heading font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <Calendar className="w-4 h-4 text-[#D4AF37]" />
+                    <span>{language === "en" ? "Book Direct Visit" : "ہوم وزٹ بک کریں"}</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      {/* DR. HADIQA DETAILED POPUP MODAL */}
+      <DrHadiqaModal
+        isOpen={isDrModalOpen}
+        initialTab={drModalTab}
+        onClose={() => setIsDrModalOpen(false)}
+        onBookSession={(serviceName) => {
+          setIsDrModalOpen(false);
+          onOpenConsultation(serviceName);
+        }}
+      />
     </section>
   );
 }
+
+

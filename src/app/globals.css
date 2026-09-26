@@ -112,7 +112,7 @@ html.lenis, html.lenis body {
 }
 
 .lenis.lenis-stopped {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 .lenis.lenis-smooth iframe {
@@ -136,3 +136,60 @@ html.lenis, html.lenis body {
 ::-webkit-scrollbar-thumb:hover {
   background: #1F6B4F;
 }
+
+/* Glossy Shimmer & Rotating Border Animation */
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  50%, 100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-shimmer-sweep {
+  animation: shimmer-sweep 3s ease-in-out infinite;
+}
+
+.glossy-border-glow {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.glossy-border-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    rgba(212, 175, 55, 0.8),
+    rgba(255, 255, 255, 0.9),
+    rgba(212, 175, 55, 0.8),
+    transparent 60%
+  );
+  animation: spin-slow 4s linear infinite;
+  z-index: -2;
+}
+
+.glossy-border-glow::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: inherit;
+  border-radius: inherit;
+  z-index: -1;
+}
+

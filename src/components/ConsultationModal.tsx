@@ -40,6 +40,20 @@ export default function ConsultationModal({ isOpen, onClose, initialCareNeeds, c
     }
   }, [isOpen, initialCareNeeds]);
 
+  // Prevent background website scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      document.documentElement.classList.add("lenis-stopped");
+
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        document.documentElement.classList.remove("lenis-stopped");
+      };
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -88,8 +102,16 @@ export default function ConsultationModal({ isOpen, onClose, initialCareNeeds, c
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-opacity animate-in fade-in duration-300">
-      <div className="relative w-full max-w-xl bg-[#FCFAF7] rounded-3xl shadow-2xl border border-[#0F3D2E]/15 overflow-hidden">
+    <div
+      data-lenis-prevent="true"
+      data-lenis-prevent-wheel="true"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-opacity animate-in fade-in duration-300"
+    >
+      <div
+        data-lenis-prevent="true"
+        data-lenis-prevent-wheel="true"
+        className="relative w-full max-w-xl bg-[#FCFAF7] rounded-3xl shadow-2xl border border-[#0F3D2E]/15 overflow-hidden overscroll-contain"
+      >
         {/* Header decoration */}
         <div className="bg-[#0F3D2E] text-white p-6 sm:p-8 relative">
           <button
