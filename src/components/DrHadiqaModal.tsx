@@ -224,7 +224,7 @@ export default function DrHadiqaModal({
 }: DrHadiqaModalProps) {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<"overview" | "physio" | "fitness" | "pricing">(initialTab);
-  
+
   // Package Selector State
   const [pricingCategory, setPricingCategory] = useState<"all" | "physio" | "fitness">("all");
   const [selectedPackageId, setSelectedPackageId] = useState<string>("physio_first_visit");
@@ -367,33 +367,30 @@ export default function DrHadiqaModal({
           <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pt-6 mt-2 border-t border-white/15 no-scrollbar">
             <button
               onClick={() => setActiveTab("overview")}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-semibold transition-all duration-200 shrink-0 cursor-pointer flex items-center gap-1.5 ${
-                activeTab === "overview"
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-semibold transition-all duration-200 shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === "overview"
                   ? "bg-[#D4AF37] text-[#071F17] shadow-lg shadow-[#D4AF37]/25 font-bold"
                   : "bg-white/10 text-white/80 hover:bg-white/20 hover:text-white"
-              }`}
+                }`}
             >
               <Stethoscope className="w-4 h-4" />
               <span>{language === "en" ? "Overview & Bio" : "تعارف اور پروفائل"}</span>
             </button>
             <button
               onClick={() => setActiveTab("physio")}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-semibold transition-all duration-200 shrink-0 cursor-pointer flex items-center gap-1.5 ${
-                activeTab === "physio"
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-semibold transition-all duration-200 shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === "physio"
                   ? "bg-[#D4AF37] text-[#071F17] shadow-lg shadow-[#D4AF37]/25 font-bold"
                   : "bg-white/10 text-white/80 hover:bg-white/20 hover:text-white"
-              }`}
+                }`}
             >
               <Activity className="w-4 h-4" />
               <span>{language === "en" ? "Home Physiotherapy" : "گھریلو فزیوتھراپی"}</span>
             </button>
             <button
               onClick={() => setActiveTab("fitness")}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-semibold transition-all duration-200 shrink-0 cursor-pointer flex items-center gap-1.5 ${
-                activeTab === "fitness"
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-heading font-semibold transition-all duration-200 shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === "fitness"
                   ? "bg-[#D4AF37] text-[#071F17] shadow-lg shadow-[#D4AF37]/25 font-bold"
                   : "bg-white/10 text-white/80 hover:bg-white/20 hover:text-white"
-              }`}
+                }`}
             >
               <Dumbbell className="w-4 h-4" />
               <span>{language === "en" ? "Women's Fitness" : "خواتین فٹنس ٹریننگ"}</span>
@@ -402,20 +399,18 @@ export default function DrHadiqaModal({
             {/* Glossy Rounded Charges & Packages Button */}
             <button
               onClick={() => setActiveTab("pricing")}
-              className={`relative group/pkg px-4.5 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all duration-300 shrink-0 cursor-pointer flex items-center gap-1.5 overflow-hidden ${
-                activeTab === "pricing"
+              className={`relative group/pkg px-4.5 py-2 rounded-xl text-xs sm:text-sm font-heading font-bold transition-all duration-300 shrink-0 cursor-pointer flex items-center gap-1.5 overflow-hidden ${activeTab === "pricing"
                   ? "bg-gradient-to-r from-[#D4AF37] via-[#FFF3B0] to-[#D4AF37] text-[#071F17] shadow-[0_0_20px_rgba(212,175,55,0.6)] border border-white"
                   : "bg-gradient-to-r from-[#0F3D2E] to-[#1F6B4F] text-[#D4AF37] border border-[#D4AF37]/60 shadow-[0_0_15px_rgba(212,175,55,0.25)] hover:border-[#D4AF37] hover:shadow-[0_0_25px_rgba(212,175,55,0.5)]"
-              }`}
+                }`}
             >
               {/* Glossy animated light sweep across the button */}
               <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none animate-shimmer-sweep" />
 
               <Percent className={`w-4 h-4 ${activeTab === "pricing" ? "text-[#071F17]" : "text-[#D4AF37]"}`} />
               <span className="relative z-10">{language === "en" ? "Charges & Packages" : "پیکیجز اور فیس"}</span>
-              <span className={`relative z-10 px-1.5 py-0.2 rounded-full text-[10px] font-extrabold uppercase ${
-                activeTab === "pricing" ? "bg-[#071F17] text-[#D4AF37]" : "bg-[#D4AF37] text-[#071F17]"
-              }`}>
+              <span className={`relative z-10 px-1.5 py-0.2 rounded-full text-[10px] font-extrabold uppercase ${activeTab === "pricing" ? "bg-[#071F17] text-[#D4AF37]" : "bg-[#D4AF37] text-[#071F17]"
+                }`}>
                 Book Online
               </span>
             </button>
@@ -500,7 +495,7 @@ export default function DrHadiqaModal({
                       <p className="text-xs text-[#777777] mt-0.5">A comfortable, respectful choice for women and elderly family members</p>
                     </div>
                   </div>
-
+                  {/* comment */}
                   <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-white border border-[#0F3D2E]/10">
                     <div className="w-9 h-9 rounded-xl bg-[#0F3D2E] text-[#D4AF37] flex items-center justify-center shrink-0">
                       <MapPin className="w-5 h-5" />
@@ -695,7 +690,7 @@ export default function DrHadiqaModal({
           {/* TAB 4: PRICING & INTERACTIVE PACKAGE SELECTOR */}
           {activeTab === "pricing" && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              
+
               {/* Header Intro */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
@@ -707,8 +702,8 @@ export default function DrHadiqaModal({
                     {language === "en" ? "Select Your Package & Quantity" : "اپنا پیکیج اور تعداد منتخب کریں"}
                   </h3>
                   <p className="text-xs sm:text-sm text-[#777777] mt-1">
-                    {language === "en" 
-                      ? "Choose a service, adjust quantity (+ / -), and send your booking directly to WhatsApp." 
+                    {language === "en"
+                      ? "Choose a service, adjust quantity (+ / -), and send your booking directly to WhatsApp."
                       : "پیکیج منتخب کریں، تعداد تبدیل کریں اور تمام تفصیلات واٹس ایپ پر بھیجیں۔"}
                   </p>
                 </div>
@@ -717,26 +712,23 @@ export default function DrHadiqaModal({
                 <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-white border border-[#0F3D2E]/15 shadow-sm self-start">
                   <button
                     onClick={() => setPricingCategory("all")}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all cursor-pointer ${
-                      pricingCategory === "all" ? "bg-[#0F3D2E] text-white shadow-sm" : "text-[#777777] hover:text-[#0F3D2E]"
-                    }`}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all cursor-pointer ${pricingCategory === "all" ? "bg-[#0F3D2E] text-white shadow-sm" : "text-[#777777] hover:text-[#0F3D2E]"
+                      }`}
                   >
                     {language === "en" ? "All Plans" : "تمام"}
                   </button>
                   <button
                     onClick={() => setPricingCategory("physio")}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                      pricingCategory === "physio" ? "bg-[#0F3D2E] text-white shadow-sm" : "text-[#777777] hover:text-[#0F3D2E]"
-                    }`}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all cursor-pointer flex items-center gap-1 ${pricingCategory === "physio" ? "bg-[#0F3D2E] text-white shadow-sm" : "text-[#777777] hover:text-[#0F3D2E]"
+                      }`}
                   >
                     <Activity className="w-3.5 h-3.5" />
                     <span>{language === "en" ? "Physiotherapy" : "فزیوتھراپی"}</span>
                   </button>
                   <button
                     onClick={() => setPricingCategory("fitness")}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                      pricingCategory === "fitness" ? "bg-[#0F3D2E] text-white shadow-sm" : "text-[#777777] hover:text-[#0F3D2E]"
-                    }`}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-heading font-bold transition-all cursor-pointer flex items-center gap-1 ${pricingCategory === "fitness" ? "bg-[#0F3D2E] text-white shadow-sm" : "text-[#777777] hover:text-[#0F3D2E]"
+                      }`}
                   >
                     <Dumbbell className="w-3.5 h-3.5" />
                     <span>{language === "en" ? "Women Fitness" : "فٹنس"}</span>
@@ -752,19 +744,17 @@ export default function DrHadiqaModal({
                     <div
                       key={pkg.id}
                       onClick={() => handleSelectPackage(pkg.id)}
-                      className={`relative p-4.5 rounded-2xl border-2 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
-                        isSelected
+                      className={`relative p-4.5 rounded-2xl border-2 transition-all duration-300 cursor-pointer flex flex-col justify-between ${isSelected
                           ? "bg-white border-[#D4AF37] shadow-[0_10px_30px_rgba(212,175,55,0.22)] ring-2 ring-[#D4AF37]/30 scale-[1.01]"
                           : "bg-white border-[#0F3D2E]/10 hover:border-[#0F3D2E]/30 hover:bg-[#FCFAF7] shadow-sm"
-                      }`}
+                        }`}
                     >
                       {/* Top Header of Card */}
                       <div className="flex items-start justify-between gap-3 mb-2">
                         <div className="flex items-center gap-2.5">
                           {/* Radio / Selection Indicator */}
-                          <div className={`w-5 h-5 rounded-full flex items-center justify-center border-2 transition-all shrink-0 ${
-                            isSelected ? "border-[#0F3D2E] bg-[#0F3D2E] text-[#D4AF37]" : "border-[#777777]/40 bg-white"
-                          }`}>
+                          <div className={`w-5 h-5 rounded-full flex items-center justify-center border-2 transition-all shrink-0 ${isSelected ? "border-[#0F3D2E] bg-[#0F3D2E] text-[#D4AF37]" : "border-[#777777]/40 bg-white"
+                            }`}>
                             {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                           </div>
                           <div>
@@ -779,11 +769,10 @@ export default function DrHadiqaModal({
 
                         {/* Discount or Badges */}
                         {pkg.badge && (
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase shrink-0 ${
-                            pkg.badge.includes("OFF") 
-                              ? "bg-[#D4AF37] text-[#071F17] shadow-sm" 
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase shrink-0 ${pkg.badge.includes("OFF")
+                              ? "bg-[#D4AF37] text-[#071F17] shadow-sm"
                               : "bg-[#0F3D2E]/10 text-[#0F3D2E]"
-                          }`}>
+                            }`}>
                             {pkg.badge}
                           </span>
                         )}
@@ -818,7 +807,7 @@ export default function DrHadiqaModal({
               {/* DYNAMIC CART & QUANTITY CALCULATOR BAR */}
               <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-[#071F17] via-[#0F3D2E] to-[#164837] text-white shadow-2xl border-2 border-[#D4AF37]/50 space-y-4">
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                  
+
                   {/* Selected Package Details */}
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
@@ -850,7 +839,7 @@ export default function DrHadiqaModal({
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    
+
                     <span className="w-8 text-center font-heading font-bold text-lg text-[#D4AF37]">
                       {quantity}
                     </span>
