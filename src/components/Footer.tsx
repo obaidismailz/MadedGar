@@ -95,7 +95,7 @@ export default function Footer() {
                 <div className="flex flex-col gap-1">
                   <span>
                     {language === "en"
-                      ? "Pakistan Office: +92 327 3308560"
+                      ? "Pakistan Office: +92 330 0234440"
                       : "پاکستان آفس: 3308560 327 92+"}
                   </span>
                   <span>
